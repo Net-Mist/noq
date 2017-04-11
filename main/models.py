@@ -125,6 +125,7 @@ class FoodItem(models.Model):
     name = models.CharField(max_length=20)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     is_available = models.BooleanField(default=False)
+    image_name = models.CharField(max_length=50, null=True)
 
 
 class Review(models.Model):

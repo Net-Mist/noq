@@ -18,3 +18,26 @@
     -o-background-size: cover;
 }
 
+.buy-button {
+    width: 115px;
+    height: 25px;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.buy-button:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.fooditem-price {
+    color:  #4b7c7d;
+    font-size: 2em;
+ }
+
+
