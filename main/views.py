@@ -19,10 +19,6 @@ from .models import User
 # from django.contrib.gis.geoip2 import GeoIP2
 
 def get_customer_position(request):
-    # g = GeoIP2()
-    # ip = request.META.get('REMOTE_ADDR', None)
-    # print(g.lat_lon(ip))
-    # print(ip)
     return 1.294949, 103.773680
 
 
@@ -43,11 +39,6 @@ def order_shop(shops, customer_position):
 
 
 def select_nearest_shop(request, n=5):
-    """
-    
-    :param n: number of shop to get 
-    :return: 
-    """
     customer_position = get_customer_position(request)
     shops = Shop.objects.all()
     shops = order_shop(shops, customer_position)
@@ -107,7 +98,6 @@ def profile(request):
         return redirect('home')
     else:
         context = {}
-        print(request.user.firstName)
         context['user'] = request.user
         if not request.user.is_shop_owner:
             customer = get_object_or_404(Customer, user_id=request.user.id)
