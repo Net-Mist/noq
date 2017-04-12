@@ -35,6 +35,7 @@ def generate_subscription_choose():
     for subscription in subscription_objects:
         subscription_list.append(
             (str(subscription.id), subscription.description + ": " + str(subscription.price) + " SGD"))
+
     return subscription_list
 
 

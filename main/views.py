@@ -4,14 +4,18 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.context_processors import csrf
+
 from .forms import UpdateProfile
-<<<<<<< HEAD
+
 from .models import Shop,Customer,ShopOwner,Order
 
-=======
-from .models import Shop
->>>>>>> a4ccd935dee81383100bba76a818a1911418e124
-from .admin import UserCreationForm
+from .admin import UserCreationForm,UserChangeForm
+
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+
+from .models import User
+
+
 
 
 # from django.contrib.gis.geoip2 import GeoIP2
@@ -95,6 +99,7 @@ def profile(request):
             owner = get_object_or_404(ShopOwner, user_id=request.user.id)
             context['balance'] = owner.credit
         return render(request, 'main/profile.html', context)
+
 
 
 def register(request):
