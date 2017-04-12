@@ -101,7 +101,6 @@ def profile(request):
         return render(request, 'main/profile.html', context)
 
 
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
