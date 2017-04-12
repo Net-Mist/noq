@@ -34,6 +34,15 @@
 
 {% include 'main/navbar.html' %}
 
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissable">
+        {{ message }}
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+    {% endfor %}
+{% endif %}
+
 
 {% block homeheader %}
 

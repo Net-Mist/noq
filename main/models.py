@@ -1,8 +1,10 @@
+import datetime
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-
+from django.utils.timezone import now
 from .managers import MyUserManager
 
 
@@ -70,7 +72,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 class Order(models.Model):
-    order_date = models.DateTimeField(null=True)
+    order_date = models.DateTimeField(null=False, default=now().date())
     isServed = models.BooleanField(default=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     bill = models.FloatField()

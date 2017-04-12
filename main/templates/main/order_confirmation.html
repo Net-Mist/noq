@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% block title %} NoQ: Order Confirmation {% endblock %}
+
+
+{% block content %}
+    <h1>Thank you, {{ user.user.firstName }}. Your order has been placed. </h1>
+    <h4>Your delivery is on its way within the next 30 mins!</h4>
+    <h4>Thank you for buying from {{ fooditem.shop.name }}</h4>
+
+    <div class="col-md-12 shop-rows">
+        <div class="col-md-10 idv-shop-row" id="idv-shop-row">
+            <div class="col-md-2">
+                <img class="shop-img" src="../../static/main/images/{{ fooditem.image_name }}" >
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <span class="shop-name">
+                        {{ fooditem.name }}<br>
+                    </span>
+                    <span class="shop-cusine italics-text">{{ fooditem.category.name }}<br></span>
+                    <span class="food-description">
+                        {{ fooditem.category.description }}
+                    </span>
+                </p>
+            </div>
+            <div class="col-md-3">
+                <span class="fooditem-price">$ {{ fooditem.price }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3> Your remaining account balance is {{ user.balance }} </h3>
+    </div>
+
+{% endblock %}

@@ -12,6 +12,15 @@ div.article-page-preview-title {
     padding-top: 17px;
 }
 
+.order-row{
+    box-shadow: 0px 1px 2px gray;
+    height: 75px;
+    margin: 16px 0px 0px 0px;
+    text-align: justify;
+    padding-top: 20px;
+    font-size: large;
+}
+
 .idv-shop-row:hover {
     background : #fbfbfb;
 }

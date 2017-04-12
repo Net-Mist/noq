@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Order History
+{% endblock %}
+
+{% block content %}
+    <h1>{{ orderMsg }}</h1>
+    <table class="table table-hover">
+        {% for order in orders %}
+            <tr class="order-row">
+                <td>{{ order.id }}</td>
+                <td>{{ order.bill }}</td>
+                <td>{{ order.order_date }}</td>
+                <td>
+                    <a href="{% url 'profile' %}"><span class="glyphicon glyphicon-chevron-right right-icon"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
