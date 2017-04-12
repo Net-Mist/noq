@@ -7,7 +7,7 @@ from django.template.context_processors import csrf
 
 from .forms import UpdateProfile
 
-from .models import Shop, Customer, ShopOwner, Order
+from .models import Shop, Customer, ShopOwner, Order, FoodItem
 
 from .admin import UserCreationForm, UserChangeForm
 
@@ -71,15 +71,35 @@ def history(request):
     if not request.user.is_authenticated:
         return redirect('home')
     else:
-        orders = Order.objects.filter(customer_id=request.user.id).order_by('-order_date')
-        context = {}
-        if orders is None:
-            context['order'] = ['No Order']
-            context['orderMsg'] = "You don't have any Past Order"
+        if not request.user.is_shop_owner:
+            orders = Order.objects.filter(customer_id=request.user.id).order_by('-id')
+            context = {}
+            if not orders:
+                context['ordersPresent'] = False
+                context['orderMsg'] = "You don't have any Past Order"
+            else:
+                context['orders'] = orders
+                context['ordersPresent'] = True
+            return render(request, 'main/history.html', context)
         else:
-            context['orders'] = orders
-            print(orders)
-        return render(request, 'main/history.html', context)
+            context = {}
+            shops = Shop.objects.filter(shop_owner_id=request.user.shopowner.id)
+            sid = -1
+            for shop in shops:
+                sid = shop.id
+            if not sid == -1:
+                current_order = Order.objects.filter(fooditem__shop= sid).order_by('-id')
+                if current_order:
+                    orders = current_order.all()
+                    context['orders'] = orders
+                    context['ordersPresent'] = True
+                else:
+                    context['ordersPresent'] = False
+                    context['orderMsg'] = "No Customer has order from your shop till now"
+            else:
+                context['ordersPresent'] = False
+                context['orderMsg'] = "You don't have any Shop"
+            return render(request, 'main/shophistory.html', context)
 
 
 def profile(request):

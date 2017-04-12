@@ -56,11 +56,16 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     balance = models.FloatField(blank=False)
 
+    def __str__(self):
+        return self.user.firstName
+
 
 class ShopOwner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     credit = models.FloatField(blank=False)
 
+    def __str__(self):
+        return self.user.firstName
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -76,6 +81,7 @@ class Order(models.Model):
     isServed = models.BooleanField(default=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     bill = models.FloatField()
+
 
 
 class SubscriptionType(models.Model):
@@ -128,6 +134,9 @@ class FoodItem(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     is_available = models.BooleanField(default=False)
     image_name = models.CharField(max_length=50, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Review(models.Model):

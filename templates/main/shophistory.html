@@ -12,7 +12,8 @@
             <table class="table table-striped">
                 <thead class="order-history-head">
                 <tr>
-                    <th>Order Number</th>
+                    <th>Order No</th>
+                    <th>Customer Email</th>
                     <th>Total Bill</th>
                     <th>Order Date</th>
                 </tr>
@@ -21,6 +22,7 @@
                 {% for order in orders %}
                     <tr class="order-row">
                         <td>{{ order.id }}</td>
+                        <td>{{ order.customer.user.email }}</td>
                         <td>$ {{ order.bill }}</td>
                         <td>{{ order.order_date }}</td>
                         <td>

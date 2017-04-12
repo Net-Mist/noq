@@ -26,6 +26,9 @@ def buy_fooditem(request, fooditem_id):
         order = Order(isServed=False,customer_id=request.user.id,bill=fooditem.price)
         order.save()
 
+        fooditem.orders.add(order)
+        fooditem.save()
+
         fooditem.shop.shop_owner.credit += fooditem.price
         fooditem.shop.shop_owner.save()
 
