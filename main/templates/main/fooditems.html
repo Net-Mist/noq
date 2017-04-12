@@ -2,15 +2,15 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h1> {{ shop.name }}</h1>
-
+    <h1> Welcome to {{ shop.name }} Shop</h1>
+    <div class="row">
    {% for fooditem in shop.fooditem_set.all %}
-    <div class="col-md-12 shop-rows">
-        <div class="col-md-10 idv-shop-row" id="idv-shop-row">
-            <div class="col-md-2">
+    <div class="col-lg-12 shop-rows">
+        <div class="col-lg-12    idv-shop-row" id="idv-shop-row">
+            <div class="col-lg-2">
                 <img class="shop-img" src="{% static 'main/images/pasta.png' %}" >
             </div>
-            <div class="col-md-5">
+            <div class="col-lg-4">
                 <p>
                     <span class="shop-name">
                         {{ fooditem.name }}<br>
@@ -21,18 +21,18 @@
                     </span>
                 </p>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <span class="fooditem-price">$ {{ fooditem.price }}</span>
             </div>
-            <form method="post" action="">
-            <div class="col-md-2 right-icon-section">
-                <button class="btn btn-info">Buy</button>
-{#                <a href="/customer/buyitem/{{ fooditem.id }}" class="buy-button">#}
-{#                    Buy#}
-{#                </a>#}
-            </div>
+            <div class="col-lg-3 right-icon-section">
+            <form method="post" action="/customer/buyitem/{{ fooditem.id }}/">{% csrf_token %}
+
+                <button class="btn btn-primary btn-lg btn-block">Order</button>
+
             </form>
+            </div>
         </div>
     </div>
     {% endfor %}
+    </div>
 {% endblock %}

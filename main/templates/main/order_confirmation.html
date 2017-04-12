@@ -1,16 +1,17 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 {% block title %} NoQ: Order Confirmation {% endblock %}
 
 
 {% block content %}
     <h1>Thank you, {{ user.user.firstName }}. Your order has been placed. </h1>
-    <h4>Your delivery is on its way within the next 30 mins!</h4>
+    <h4>We will inform you as soon as your order is ready</h4>
     <h4>Thank you for buying from {{ fooditem.shop.name }}</h4>
 
     <div class="col-md-12 shop-rows">
         <div class="col-md-10 idv-shop-row" id="idv-shop-row">
             <div class="col-md-2">
-                <img class="shop-img" src="../../static/main/images/{{ fooditem.image_name }}" >
+                <img class="shop-img" src="{% static 'main/images/pasta.png' %}">
             </div>
             <div class="col-md-6">
                 <p>
@@ -23,14 +24,24 @@
                     </span>
                 </p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <span class="fooditem-price">$ {{ fooditem.price }}</span>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <h3> Your remaining account balance is {{ user.balance }} </h3>
+    <div class="row bal_div">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <p class="lead">
+                <h3> Your remaining account balance is {{ user.balance }} </h3></p>
+            </div>
+            <div class="col-md-3">
+                <a href="/customer/fooditems/{{ shop }}" class="btn btn-primary btn-lg foodbtn" role="button">Order Again</a>
+            </div>
+        </div>
     </div>
+    {#    {{ linebreaksbr }}#}
+    {#        <p class="lead"><h3> Your remaining account balance is {{ user.balance }} </h3></p>#}
+
 
 {% endblock %}
