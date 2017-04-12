@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'bootstrap3',
     'crispy_forms',
 ]
@@ -129,3 +130,5 @@ LOGIN_REDIRECT_URL = '../'
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+GEOIP_PATH = os.path.join(BASE_DIR, 'data')
