@@ -71,14 +71,13 @@ def history(request):
     if not request.user.is_authenticated:
         return redirect('home')
     else:
-        orders = Order.objects.select_related().filter(customer_id=1)
+        orders = Order.objects.filter(customer_id=request.user.id).order_by('-order_date')
         context = {}
         if orders is None:
             context['order'] = ['No Order']
             context['orderMsg'] = "You don't have any Past Order"
         else:
             context['orders'] = orders
-            context['orderMsg'] = "Order History"
             print(orders)
         return render(request, 'main/history.html', context)
 

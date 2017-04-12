@@ -5,17 +5,33 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ orderMsg }}</h1>
-    <table class="table table-hover">
-        {% for order in orders %}
-            <tr class="order-row">
-                <td>{{ order.id }}</td>
-                <td>{{ order.bill }}</td>
-                <td>{{ order.order_date }}</td>
-                <td>
-                    <a href="{% url 'profile' %}"><span class="glyphicon glyphicon-chevron-right right-icon"></span></a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="history-container">
+        {% if not orderMsg is None %}
+            <h1>{{ orderMsg }}</h1>
+        {% else %}
+            <table class="table table-striped">
+                <thead class="order-history-head">
+                <tr>
+                    <th>Order Number</th>
+                    <th>Total Bill</th>
+                    <th>Order Date</th>
+                </tr>
+                </thead>
+                <tbody >
+                {% for order in orders %}
+                    <tr class="order-row">
+                        <td>{{ order.id }}</td>
+                        <td>$ {{ order.bill }}</td>
+                        <td>{{ order.order_date }}</td>
+                        <td>
+                            <a href="#"><span
+                                    class="glyphicon glyphicon-chevron-right right-icon"></span></a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
 {% endblock %}
