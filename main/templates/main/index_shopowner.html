@@ -1,15 +1,24 @@
 {% extends 'main/base.html' %}
 {% block content %}
-    List of all the shops:
+    <h1>Shop management</h1>
     {% if shop_list %}
-        <ul>
+        <table class="table table-striped">
+            <tr>
+                <th>Shop</th>
+                <th>Subscription type</th>
+                <th>Subscription end</th>
+            </tr>
             {% for shop in shop_list %}
-                <li><a href="{% url 'shopowner:shop' shop.id %}">{{ shop.name }}</a></li>
+                <tr>
+                    <td><a href="{% url 'shopowner:shop' shop.id %}">{{ shop.name }}</a></td>
+                    <td>{{ shop.subscription.subscription_type.name }}</td>
+                    <td>{{ shop.subscription.end_date }}</td>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
+        <a class="btn btn-default" href="{% url 'shopowner:newshop' %}" role="button">Add a new shop</a>
     {% else %}
-        <p>No Shop are available.</p>
+        <p> You didn't subscribe to any services yet. </p>
+        <a class="btn btn-default" href="{% url 'shopowner:newshop' %}" role="button">Subscribe</a>
     {% endif %}
-    <a class="btn btn-default" href="{% url 'shopowner:newshop' %}" role="button">Add a new shop</a>
-
 {% endblock %}

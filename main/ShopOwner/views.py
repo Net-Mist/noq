@@ -1,16 +1,14 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
-from ..models import Shop, SubscriptionType, FoodItem, Category, Order
+from django.shortcuts import get_object_or_404, render, redirect
+from ..models import Shop, SubscriptionType, FoodItem, Category, Order, Subscription
 from django import forms
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
-from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
-from crispy_forms.utils import render_crispy_form
-from django.utils import timezone
+from crispy_forms.layout import Layout, Submit, Field
+from crispy_forms.bootstrap import FormActions
 import urllib3
 import json
+from datetime import datetime, timedelta
 
 
 def get_gps_coordinate(post_code: int):
@@ -96,11 +94,15 @@ class NewMealForm(forms.Form):
 
 
 def index(request):
-    shop_list = Shop.objects.order_by('name')
+    if not request.user.is_authenticated:
+        return redirect('home')
+    shop_list = Shop.objects.order_by('name').filter(shop_owner_id=request.user.id)
     return render(request, 'main/index_shopowner.html', {'shop_list': shop_list})
 
 
 def shop(request, shop_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     current_shop = get_object_or_404(Shop, pk=shop_id)
     current_order = Order.objects.filter(fooditem__shop=shop_id).filter(isServed=False).order_by(
         'order_date').distinct()
@@ -108,6 +110,8 @@ def shop(request, shop_id):
 
 
 def newmeal(request, shop_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     current_shop = get_object_or_404(Shop, pk=shop_id)
     form = NewMealForm(request.POST or None)
     if form.is_valid():
@@ -116,24 +120,36 @@ def newmeal(request, shop_id):
                             shop_id=shop_id, category_id=request.POST['category'])
         new_meal.save()
         # return to the shop page
-        return HttpResponseRedirect(reverse('shopowner:shop', args=(shop_id)))
+        return redirect('shopowner:shop', shop_id=shop_id)
 
     return render(request, 'main/newmeal.html', {'form': form})
 
 
 def newshop(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     form = NewShopForm(request.POST or None)
     if form.is_valid():
-        # Create the new shop
+        # Find the duration of the subscription
+        subscription_type = get_object_or_404(SubscriptionType, pk=request.POST['subscription'])
 
+        # Create the new subscription
+        new_subscription = Subscription(
+            starting_date=datetime.now(),
+            end_date=datetime.now() + timedelta(days=30 * subscription_type.duration),
+            subscription_type_id=request.POST['subscription']
+        )
+        new_subscription.save()
+
+        # Create the new shop
         postal_code = request.POST['postal_code']
         lat, lng = get_gps_coordinate(postal_code)
 
         new_shop = Shop(name=request.POST['shop_name'], postal_code=postal_code,
-                        subscription_id=request.POST['subscription'],
+                        subscription_id=new_subscription.id,
                         latitude=lat,
                         longitude=lng,
-                        shop_owner_id=1)  # TODO remplace with the good id
+                        shop_owner_id=request.user.id)
         new_shop.save()
 
         # return to the shop page
@@ -142,6 +158,8 @@ def newshop(request):
 
 
 def food_ready(request, shop_id, food_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     current_shop = get_object_or_404(Shop, pk=shop_id)
     current_order = get_object_or_404(Order, pk=food_id)
     current_order.isServed = True
@@ -152,6 +170,8 @@ def food_ready(request, shop_id, food_id):
 
 
 def food_available(request, shop_id, food_id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     current_shop = get_object_or_404(Shop, pk=shop_id)
     current_food_item = get_object_or_404(FoodItem, pk=food_id)
     current_food_item.is_available = not current_food_item.is_available
