@@ -1,12 +1,11 @@
 #!/bin/bash
 
-apt install python3-pip
-
 if [ -z "$VCAP_APP_PORT" ];
 then SERVER_PORT=5000;
 else SERVER_PORT="$VCAP_APP_PORT";
 fi
 echo port is $SERVER_PORT
-python3 -V
-python3 manage.py runserver --noreload 0.0.0.0:$SERVER_PORT#!/bin/bash
+python manage.py makemigration main
+python manage.py migrate
+python manage.py runserver --noreload 0.0.0.0:$SERVER_PORT
 

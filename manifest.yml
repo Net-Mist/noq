@@ -1,0 +1,8 @@
+---
+applications:
+ - name: noq
+   random-route: true
+   memory: 128M
+   command: bash ./run.sh
+   buildpack: python_buildpack
+   path: .
