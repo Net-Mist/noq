@@ -6,12 +6,18 @@
                 <li><a href="{% url 'home' %}">NoQ</a></li>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="#about">About</a></li>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_shop_owner == 1 %}
+                        <li><a href="/shopowner">Manage Shop</a></li>
+                    {% endif %}
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
                     <li class="active"><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                    <li><a  href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
                 {% endif %}
             </ul>
             {% if not request.user.is_authenticated and not "/login" in request.get_full_path %}
