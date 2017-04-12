@@ -1,9 +1,17 @@
 {% extends 'main/base.html' %}
+{% block style %}
+
+{% endblock %}
 {% block content %}
-<h1>Your Profile successfully registered</h1>
-<script>
+    <div class="alert alert-success div-suc-row" role="alert">
+        <h1 class="alert-heading">Congratulations!</h1>
+        <p>You have succesfully registered. Enjoy ordering food through NoQ</p>
+        <p class="mb-0">Please complete your profile and allow us to serve you better.</p>
+
+    </div>
+    <script>
   window.setTimeout(function(){
     window.location.href = "/";
-  }, 2000);
+  }, 3000);
 </script>
 {% endblock %}

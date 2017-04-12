@@ -12,6 +12,13 @@ div.article-page-preview-title {
     padding-top: 17px;
 }
 
+.div-suc-row{
+    font-size: 1.5em;
+    margin-top: 80px;
+    text-align: justify;
+    padding-top: 17px;
+}
+
 .order-row{
     box-shadow: 0px 1px 2px gray;
     height: 75px;
@@ -60,3 +67,12 @@ div.article-page-preview-title {
 .right-icon-section {
     margin: 27px 0px 0px 0px;
 }
+
+.suc-cont {
+    margin-top:130px;
+    align:center;
+    height: 230px;
+}
+
+
+

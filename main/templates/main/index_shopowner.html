@@ -18,7 +18,10 @@
         </table>
         <a class="btn btn-default" href="{% url 'shopowner:newshop' %}" role="button">Add a new shop</a>
     {% else %}
-        <p> You didn't subscribe to any services yet. </p>
-        <a class="btn btn-default" href="{% url 'shopowner:newshop' %}" role="button">Subscribe</a>
+        <div class="alert alert-danger" style="font-size:1.6em;">
+                <strong> You didn't subscribe to any services yet</strong>
+            </div>
+        <p> . </p>
+        <a class="btn btn-primary btn-lg" href="{% url 'shopowner:newshop' %}" role="button">Subscribe</a>
     {% endif %}
 {% endblock %}

@@ -1,9 +1,12 @@
+{% load staticfiles %}
 <!-- Static navbar -->
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'home' %}">NoQ</a></li>
+                <li><a style="padding: 0;" href="{% url 'home' %}"><img src=" {% static 'main/images/noq_logo.png'%}" alt="Icon" class="src noq-logo"></a></li>
+                <li><span class="app-name">no queue</span></li>
+                <!--<li><a href="{% url 'home' %}">NoQ</a></li>-->
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="#about">About</a></li>
                 {% if request.user.is_authenticated %}
@@ -15,7 +18,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'profile' %}">Profile</a></li>
-                    <li class="active"><a href="{% url 'logout' %}">Logout</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="{% url 'register' %}">Register</a></li>
                 {% endif %}

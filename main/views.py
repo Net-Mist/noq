@@ -62,6 +62,12 @@ def select_nearest_shop(request, n=5):
 
 def home(request):
     shops = select_nearest_shop(request)
+    if request.method == 'POST':
+        search = request.POST.get("txt_search","noval")
+        if search == 'noval':
+            shops = select_nearest_shop(request)
+        else:
+            shops = Shop.objects.filter(cusine_type__icontains=search)
     distances = []
     customer_position = get_customer_position(request)
     for s in shops:

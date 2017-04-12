@@ -24,7 +24,7 @@ SECRET_KEY = 'u8o87(uzdu*27!3@4mfn5kuritu=bp!#j12@7hvhh@u!agnndf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','noq.au-syd.mybluemix.net']
+ALLOWED_HOSTS = ['127.0.0.1','192.168.1.95','noq.au-syd.mybluemix.net']
 
 # Application definition
 

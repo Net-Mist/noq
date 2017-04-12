@@ -23,7 +23,12 @@ def buy_fooditem(request, fooditem_id):
         fooditem = get_object_or_404(FoodItem, pk=fooditem_id)
         current_user = get_object_or_404(Customer, user_id=request.user.id)
 
+        if current_user.balance < fooditem.price:
+            messages.add_message(request, messages.ERROR, 'Insufficient Balance, Please buy credit to Order Food')
+            return redirect('home')
+
         order = Order(isServed=False,customer_id=request.user.id,bill=fooditem.price)
+
         order.save()
 
         fooditem.orders.add(order)

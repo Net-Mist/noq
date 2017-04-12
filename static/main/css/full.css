@@ -49,3 +49,25 @@
     margin-top: 15px;
 }
 
+#myjumbo {
+    margin: -20% 0% 0% 0%;
+}
+
+.shop-list{
+    margin-top: 9%;
+}
+
+.noq-logo {
+    height: 50px;
+}
+
+.app-name {
+    color: #ccceec;
+    font-size: 32px;
+    margin: 0px 0px 0px 12px;
+    font-family: Apple Chancery, cursive;
+    font-weight: 700;
+    padding-right: 45px;
+}
+
+

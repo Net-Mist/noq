@@ -7,7 +7,9 @@
 {% block content %}
     <div class="history-container">
         {% if ordersPresent == False %}
-            <h1>{{ orderMsg }}</h1>
+           <div class="alert alert-danger" style="font-size:1.6em;">
+                <strong> {{ orderMsg }}</strong>
+            </div>
         {% else %}
             <table class="table table-striped">
                 <thead class="order-history-head">
@@ -17,7 +19,7 @@
                     <th>Order Date</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 {% for order in orders %}
                     <tr class="order-row">
                         <td>{{ order.id }}</td>
