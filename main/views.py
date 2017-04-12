@@ -15,26 +15,41 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from .models import User
 
-
 # from django.contrib.gis.geoip2 import GeoIP2
+from math import radians, cos, sin, asin, sqrt
+
+
+def haversine(p1, p2):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    lon1, lat1 = p1
+    lon2, lat2 = p2
+    # convert decimal degrees to radians
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * asin(sqrt(a))
+    km = 6367 * c
+    return km
+
 
 def get_customer_position(request):
     return 1.294949, 103.773680
-
-
-def compute_square_distance(p1, p2):
-    return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
 
 
 def order_shop(shops, customer_position):
     if len(shops) <= 1:
         return shops
     pivot = shops[0]
-    distance_pivot = compute_square_distance(customer_position, (pivot.latitude, pivot.longitude))
+    distance_pivot = haversine(customer_position, (pivot.latitude, pivot.longitude))
     nearer_shop = [s for s in shops[1:] if
-                   compute_square_distance(customer_position, (s.latitude, s.longitude)) <= distance_pivot]
+                   haversine(customer_position, (s.latitude, s.longitude)) <= distance_pivot]
     farer_shop = [s for s in shops[1:] if
-                  compute_square_distance(customer_position, (s.latitude, s.longitude)) > distance_pivot]
+                  haversine(customer_position, (s.latitude, s.longitude)) > distance_pivot]
     return order_shop(nearer_shop, customer_position) + [pivot] + order_shop(farer_shop, customer_position)
 
 
@@ -47,7 +62,13 @@ def select_nearest_shop(request, n=5):
 
 def home(request):
     shops = select_nearest_shop(request)
-    return render(request, 'main/home.html', {'shops': shops})
+    distances = []
+    customer_position = get_customer_position(request)
+    for s in shops:
+        distances.append(haversine(customer_position, (s.latitude, s.longitude)))
+
+    shop_and_distances = zip(shops, distances)
+    return render(request, 'main/home.html', {'shops': shops, 'distances': shop_and_distances})
 
 
 def success(request):
@@ -79,7 +100,7 @@ def history(request):
             for shop in shops:
                 sid = shop.id
             if not sid == -1:
-                current_order = Order.objects.filter(fooditem__shop= sid).order_by('-id')
+                current_order = Order.objects.filter(fooditem__shop=sid).order_by('-id')
                 if current_order:
                     orders = current_order.all()
                     context['orders'] = orders

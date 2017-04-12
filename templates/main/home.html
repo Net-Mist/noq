@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block style %}
- {% comment %}   body{
+    {% comment %}   body{
     background-image:url("../../static/main/images/republic.jpeg");
     }
 
@@ -39,67 +39,67 @@
 {% endblock %}
 {% block content %}
 
-{% for eachshop in shops %}
-    <div class="col-md-12 shop-rows">
-        <div class="col-md-1"></div>
-        <a class="col-md-10 idv-shop-row" href="/customer/fooditems/{{eachshop.id}}" id="idv-shop-row">
-            <div class="col-md-2">
-                <img class="shop-img" src="../../static/main/images/{{eachshop.image_name}}" >
-            </div>
-            <div class="col-md-9">
-                <p>
+    {% for eachshop, d in distances %}
+        <div class="col-md-12 shop-rows">
+            <div class="col-md-1"></div>
+            <a class="col-md-10 idv-shop-row" href="/customer/fooditems/{{ eachshop.id }}" id="idv-shop-row">
+                <div class="col-md-2">
+                    <img class="shop-img" src="../../static/main/images/{{ eachshop.image_name }}">
+                </div>
+                <div class="col-md-9">
+                    <p>
                     <span class="shop-name">
                         {{ eachshop.name }}<br>
                     </span>
-                    <span class="shop-cusine italics-text">{{ eachshop.cusine_type }} cusine <br></span>
-                    <span class="">
+                        <span class="shop-cusine italics-text">{{ eachshop.cusine_type }} cuisine, distance: {{ d|floatformat:2 }} km <br></span>
+                        <span class="">
+                    </span>
+                    </p>
+                </div>
+                <div class="col-md-1 right-icon-section">
+                    <span class="glyphicon glyphicon-chevron-right right-icon"></span>
+                </div>
+            </a>
+            <div class="col-md-1"></div>
+        </div>
+    {% endfor %}
+
+
+    <!--
+    <div class="col-md-12 article-page-preview-rows">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 article-02-preview article-preview" id="article-02-preview">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <p>
+                    <span class="article-02-preview-title article-preview-title">
+                    Punjabi Tadka <br>
+                    </span>
+                    <span class="preview-subtitle italics-text">Everyone' favorite north Indian food <br></span>
+                    <span class="preview-text">
                     </span>
                 </p>
             </div>
-            <div class="col-md-1 right-icon-section">
-                <span class="glyphicon glyphicon-chevron-right right-icon"></span>
-            </div>
-        </a>
+        </div>
         <div class="col-md-1"></div>
     </div>
-{% endfor %}
-
-
-<!--
-<div class="col-md-12 article-page-preview-rows">
-    <div class="col-md-1"></div>
-    <div class="col-md-10 article-02-preview article-preview" id="article-02-preview">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-            <p>
-                <span class="article-02-preview-title article-preview-title">
-                Punjabi Tadka <br>
-                </span>
-                <span class="preview-subtitle italics-text">Everyone' favorite north Indian food <br></span>
-                <span class="preview-text">
-                </span>
-            </p>
+    <div class="col-md-12 article-page-preview-rows">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 article-03-preview article-preview" id="article-03-preview">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <p>
+                    <span class="article-03-preview-title article-preview-title">
+                    Big Bern's <br>
+                    </span>
+                    <span class="preview-subtitle italics-text">Best American Grilled food you can get <br></span>
+                    <span class="preview-text">
+                    </span>
+                </p>
+            </div>
         </div>
+        <div class="col-md-1"></div>
     </div>
-    <div class="col-md-1"></div>
-</div>
-<div class="col-md-12 article-page-preview-rows">
-    <div class="col-md-1"></div>
-    <div class="col-md-10 article-03-preview article-preview" id="article-03-preview">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-            <p>
-                <span class="article-03-preview-title article-preview-title">
-                Big Bern's <br>
-                </span>
-                <span class="preview-subtitle italics-text">Best American Grilled food you can get <br></span>
-                <span class="preview-text">
-                </span>
-            </p>
-        </div>
-    </div>
-    <div class="col-md-1"></div>
-</div>
--->
+    -->
 
 {% endblock %}
