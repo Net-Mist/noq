@@ -21,6 +21,14 @@ div.article-page-preview-title {
     font-size: large;
 }
 
+.order-history-head{
+    height: 50px;
+    font-size: 2em;
+}
+.history-container{
+    margin-top: 50px;
+    align:left;
+}
 .idv-shop-row:hover {
     background : #fbfbfb;
 }

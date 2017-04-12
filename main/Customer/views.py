@@ -5,7 +5,7 @@ from django.contrib import messages
 # Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
-from ..models import Shop, User, Customer, FoodItem
+from ..models import Shop, User, Customer, FoodItem,Order
 
 
 def fooditems(request, shop_id):
@@ -20,10 +20,11 @@ def buy_fooditem(request, fooditem_id):
         messages.add_message(request, messages.INFO, 'You must be logged in to place an order')
         return redirect('home')
     else:
-        print(request.META.get('HTTP_REFERER'))
-        print('Inside buy food post method')
         fooditem = get_object_or_404(FoodItem, pk=fooditem_id)
         current_user = get_object_or_404(Customer, user_id=request.user.id)
+
+        order = Order(isServed=False,customer_id=request.user.id,bill=fooditem.price)
+        order.save()
 
         fooditem.shop.shop_owner.credit += fooditem.price
         fooditem.shop.shop_owner.save()

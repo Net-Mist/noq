@@ -72,7 +72,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 class Order(models.Model):
-    order_date = models.DateTimeField(null=False, default=now().date())
+    order_date = models.DateTimeField(null=False, default=now())
     isServed = models.BooleanField(default=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     bill = models.FloatField()
