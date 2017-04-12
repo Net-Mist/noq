@@ -11,7 +11,7 @@ import json
 from datetime import datetime, timedelta
 
 
-def get_gps_coordinate(post_code: int):
+def get_gps_coordinate(post_code):
     http = urllib3.PoolManager()
     r = http.request('GET', 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(
         post_code) + ',+Singapore&key=AIzaSyA3VQzOg4WzjmDwFT8vP4ptCYbj0edQvPw')
