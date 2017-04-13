@@ -90,7 +90,7 @@ def history(request):
         return redirect('home')
     else:
         if not request.user.is_shop_owner:
-            orders = Order.objects.filter(customer_id=request.user.id).order_by('-id')
+            orders = Order.objects.filter(customer_id=request.user.customer.id).order_by('-id')
             context = {}
             if not orders:
                 context['ordersPresent'] = False
