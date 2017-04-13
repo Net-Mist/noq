@@ -21,9 +21,6 @@ def get_gps_coordinate(post_code):
     lat = content['results'][0]['geometry']['location']['lat']
     lng = content['results'][0]['geometry']['location']['lng']
 
-    print(lat)
-    print(lng)
-
     return lat, lng
 
 
@@ -47,6 +44,7 @@ def generate_category_choose():
 
 class NewShopForm(forms.Form):
     shop_name = forms.CharField()
+    shop_cusine_type = forms.CharField()
 
     subscription = forms.ChoiceField(
         choices=(generate_subscription_choose()),
@@ -63,6 +61,7 @@ class NewShopForm(forms.Form):
         Field('shop_name', css_class='input-xlarge'),
         'subscription',
         'postal_code',
+        'shop_cusine_type',
         FormActions(
             Submit('save_changes', 'Save changes', css_class="btn-primary"),
             Submit('cancel', 'Cancel'),
@@ -149,7 +148,8 @@ def newshop(request):
                         subscription_id=new_subscription.id,
                         latitude=lat,
                         longitude=lng,
-                        shop_owner_id=request.user.id)
+                        shop_owner_id=request.user.id,
+                        cusine_type=request.POST['shop_cusine_type'])
         new_shop.save()
 
         # return to the shop page

@@ -104,7 +104,7 @@ class Subscription(models.Model):
 
 
 class Shop(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     shop_owner = models.ForeignKey(ShopOwner, on_delete=models.CASCADE)
     subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE)
     postal_code = models.IntegerField()
