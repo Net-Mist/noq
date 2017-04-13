@@ -27,7 +27,7 @@ def buy_fooditem(request, fooditem_id):
             messages.add_message(request, messages.ERROR, 'Insufficient Balance, Please buy credit to Order Food')
             return redirect('home')
 
-        order = Order(isServed=False,customer_id=request.user.id,bill=fooditem.price)
+        order = Order(isServed=False,customer_id=request.user.customer.id,bill=fooditem.price)
 
         order.save()
 
