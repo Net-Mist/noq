@@ -53,7 +53,7 @@ def order_shop(shops, customer_position):
     return order_shop(nearer_shop, customer_position) + [pivot] + order_shop(farer_shop, customer_position)
 
 
-def select_nearest_shop(request, n=5):
+def select_nearest_shop(request, n=10):
     customer_position = get_customer_position(request)
     shops = Shop.objects.all()
     shops = order_shop(shops, customer_position)
