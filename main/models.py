@@ -111,7 +111,7 @@ class Shop(models.Model):
     address = models.CharField(max_length=200, null=True, blank=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    image_name = models.CharField(max_length=50, null=True)
+    image_name = models.CharField(max_length=50, null=True, default='noq_logo.png')
     cusine_type = models.CharField(max_length=50, null=True)
 
     def __str__(self):
@@ -133,7 +133,7 @@ class FoodItem(models.Model):
     name = models.CharField(max_length=20)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     is_available = models.BooleanField(default=False)
-    image_name = models.CharField(max_length=50, null=True)
+    image_name = models.CharField(max_length=50, null=True,default='eat-flat.png')
 
     def __str__(self):
         return self.name
